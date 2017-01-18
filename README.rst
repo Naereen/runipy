@@ -49,6 +49,11 @@ To run a ``.ipynb`` file and generate an ``HTML`` report, run::
 
     $ runipy MyNotebook.ipynb --html report.html
 
+To save the output of each cell back to the notebook file,
+but also display the output of each cell to the terminal, run::
+
+    $ runipy --logback -o MyNotebook.ipynb
+
 Passing Arguments
 -----------------
 

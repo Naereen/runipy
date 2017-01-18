@@ -83,6 +83,10 @@ def main():
         help='start notebook with matplotlib inlined'
     )
     parser.add_argument(
+        '--logback', action='store_true',
+        help='display in the terminal the output of every cell as well as storing it in the notebook'
+    )
+    parser.add_argument(
         '--skip-exceptions', '-s', action='store_true',
         help='if an exception occurs in a cell,' +
              ' continue running the subsequent cells'
@@ -153,7 +157,7 @@ def main():
         # Ipython 2
         nb = reads(payload, 'json')
     nb_runner = NotebookRunner(
-        nb, args.pylab, args.matplotlib, profile_dir, working_dir
+        nb, args.pylab, args.matplotlib, args.logback, profile_dir, working_dir
     )
 
     exit_status = 0

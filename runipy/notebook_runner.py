@@ -66,6 +66,7 @@ class NotebookRunner(object):
             nb,
             pylab=False,
             mpl_inline=False,
+            logback=False,
             profile_dir=None,
             working_dir=None):
         self.km = KernelManager()
@@ -83,6 +84,7 @@ class NotebookRunner(object):
                 '--matplotlib is deprecated and' +
                 ' will be removed in a future version'
             )
+        self.logback = logback
 
         if profile_dir:
             args.append('--profile-dir=%s' % os.path.abspath(profile_dir))
@@ -148,6 +150,8 @@ class NotebookRunner(object):
             logging.info(traceback_text)
         else:
             logging.info('Cell returned')
+            if self.logback:
+                logging.info('Output of the cell:')
 
         outs = list()
         while True:
@@ -190,6 +194,8 @@ class NotebookRunner(object):
                     out.text = content['text']
                 else:
                     out.text = content['data']
+                if self.logback:
+                    print(out.text)
             elif msg_type in ('display_data', 'pyout'):
                 for mime, data in content['data'].items():
                     try:
@@ -208,6 +214,8 @@ class NotebookRunner(object):
 
                     data_out = data if not json_encode else json.dumps(data)
                     setattr(out, attr, data_out)
+                    if self.logback:
+                        print(data_out)
             elif msg_type == 'pyerr':
                 out.ename = content['ename']
                 out.evalue = content['evalue']
