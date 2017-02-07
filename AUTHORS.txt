@@ -23,3 +23,4 @@ Thomas Robitaille
 Andrey Tatarinov
 George Titsworth
 Andrea Zonca
+Lilian Besson
